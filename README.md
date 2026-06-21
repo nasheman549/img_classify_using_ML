@@ -1,4 +1,4 @@
-# img_classify_using_Machine Learning 
+# Image_classify_using_Machine Learning 
 ## 1. Introduction
 An image classifier using machine learning is a tool that looks at a picture and decides what category it belongs to — for example, identifying whether an image shows a flower, a car, or a butterfly. The motivation behind building image classifiers is to make image sorting and recognition faster and easier. This has real-world applications in many fields, such as helping doctors detect diseases from medical images, recognizing products in retail stores, and helping self-driving cars understand their surroundings on the road.
 
