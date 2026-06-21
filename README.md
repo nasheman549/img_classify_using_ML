@@ -32,7 +32,7 @@ The trained model predicts outcomes for new, unseen images
 
 <img width="1409" height="761" alt="image" src="https://github.com/user-attachments/assets/e25509ee-ab1d-42fb-bc95-85b177debd2b" />
 
-##5. Coding Section
+## 5. Coding Section
 Dataset Preparation: Images for the three categories (butterfly, cars, sunflowers) were collected, resized, and converted into flattened arrays suitable for training an SVM model.
 Data Visualization: A bar graph was plotted to show the number of images available per category, confirming a balanced dataset across butterfly, cars, and pretty sunflowers classes.
 
