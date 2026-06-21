@@ -21,19 +21,42 @@ The dataset for this project was built using Bing Image Search to collect images
 ## 4. Proposed Solution / Methodology
 The system design follows a standard machine learning pipeline:
 Data → Training the Machine → Building a Model → Predicting Outcome
+## System design 
+
 <img width="695" height="219" alt="Picture1" src="https://github.com/user-attachments/assets/aeaa84ea-650e-4677-aa26-1701adb4a36d" />
+
 Image data is collected and prepared
 The machine is trained on this data
 A classification model is built using SVM
 The trained model predicts outcomes for new, unseen images
 
+<img width="1409" height="761" alt="image" src="https://github.com/user-attachments/assets/e25509ee-ab1d-42fb-bc95-85b177debd2b" />
+
 ##5. Coding Section
 Dataset Preparation: Images for the three categories (butterfly, cars, sunflowers) were collected, resized, and converted into flattened arrays suitable for training an SVM model.
 Data Visualization: A bar graph was plotted to show the number of images available per category, confirming a balanced dataset across butterfly, cars, and pretty sunflowers classes.
+
+<img width="810" height="702" alt="image" src="https://github.com/user-attachments/assets/51817b14-56af-4fa4-8d00-7e2735437a08" />
+
 Splitting the Data: The dataset was split into training and testing sets using train_test_split from scikit-learn, ensuring the model could be evaluated on unseen data.
+
+<img width="1120" height="249" alt="image" src="https://github.com/user-attachments/assets/5a56e308-d40b-4ba9-97f8-8792602b10da" />
+
 Defining the Model: An SVM classifier was defined using sklearn.svm, with GridSearchCV used to tune hyperparameters (such as kernel type and regularization parameter C) for the best performance.
+
+<img width="1068" height="444" alt="image" src="https://github.com/user-attachments/assets/63e17803-996e-4448-b936-c76d0828b523" />
+
 Checking Accuracy: The model's accuracy was evaluated using accuracy_score, and a confusion matrix was generated to analyze prediction performance across the three classes.
+
+<img width="1343" height="571" alt="image" src="https://github.com/user-attachments/assets/34ac072e-2f9d-442b-9e88-f033189abb3d" />
+
 Testing with a New Image: A function was written to accept an image URL, download and preprocess the image (resize, flatten), and pass it through the trained model to predict its category — printing the predicted output (e.g., "cars").
+
+<img width="1534" height="652" alt="image" src="https://github.com/user-attachments/assets/d7607dc1-ceab-4d30-ae48-833fb42c5438" />
+
+<img width="1281" height="978" alt="image" src="https://github.com/user-attachments/assets/b1caa995-ee62-48d6-8d67-ab28a47078d1" />
+
+<img width="679" height="962" alt="image" src="https://github.com/user-attachments/assets/458109d3-69c4-4b9e-ad7a-33bd45eb3858" />
 
 ## 6. Results
 The model achieved a classification accuracy of over 90%
