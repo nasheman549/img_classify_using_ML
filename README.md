@@ -7,6 +7,7 @@ Aims:
 Create an accurate classification model
 Improve the model's accuracy over time
 Make the model usable in real-life applications
+
 Objectives:
 Prepare and preprocess the image dataset
 Identify and extract important features from images
@@ -20,6 +21,7 @@ The dataset for this project was built using Bing Image Search to collect images
 ## 4. Proposed Solution / Methodology
 The system design follows a standard machine learning pipeline:
 Data → Training the Machine → Building a Model → Predicting Outcome
+<img width="695" height="219" alt="Picture1" src="https://github.com/user-attachments/assets/aeaa84ea-650e-4677-aa26-1701adb4a36d" />
 Image data is collected and prepared
 The machine is trained on this data
 A classification model is built using SVM
