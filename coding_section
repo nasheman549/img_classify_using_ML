@@ -1,1 +1,117 @@
+!mkdir imagess
+from bing_image_downloader import downloader
+downloader.download("butterfly",limit=30,output_dir='imagess',
+                                       adult_filter_off=True)
+downloader.download("cars",limit=30,output_dir='imagess',
+                                   adult_filter_off=True)
+downloader.download("preety sunflowers",limit=30,output_dir='imagess',
+                                       adult_filter_off=True)
+!pip install ipython-autotime
+%load_ext autotime
+#dataset
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from skimage.io import imread
+from skimage.transform import resize
+
+target=[]
+images=[]
+flat_data=[]
+
+datadir='/content/imagess'
+catagories=['butterfly','cars','preety sunflowers']
+
+for category in catagories:
+  class_num=catagories.index(category) #label encoding the values
+  #print(class_num)
+  path=os.path.join(datadir,category) #create path to use all the images
+  for img in os.listdir(path):
+    img_array=imread(os.path.join(path,img))
+    #print(img_array.shape)
+    #plt.imshow(img_array)
+    img_resized=resize(img_array,(150,150,3))#normalizes the value from 0 to 1
+    flat_data.append(img_resized.flatten())
+    images.append(img_resized)
+    target.append(class_num)
+
+flat_data=np.array(flat_data)
+target=np.array(target)
+images=np.array(images)
+unique,count=np.unique(target,return_counts=True)
+plt.bar(catagories,count)
+#split data in to training and testing
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(flat_data,target,
+                                  test_size=0.3,random_state=109)
+from sklearn.model_selection import GridSearchCV
+from sklearn import svm
+
+param_grid = [
+    {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+    {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+
+svc = svm.SVC(probability=True)
+clf = GridSearchCV(svc, param_grid)
+
+clf.fit(x_train,y_train)
+y_pred=clf.predict(x_test)
+y_pred
+y_test
+from sklearn.metrics import accuracy_score,confusion_matrix
+accuracy_score(y_pred,y_test)
+confusion_matrix(y_pred,y_test)
+#save the model using pickle library
+import pickle
+pickle.dump(clf,open('img_model.p','wb'))
+model=pickle.load(open('img_model.p','rb'))
+#testing a brand new image
+flat_data=[]
+url=input('enter your url')
+img=imread(url)
+img_resized=resize(img,(150,150,3))
+flat_data.append(img_resized.flatten())
+flat_data=np.array(flat_data)
+print(img.shape)
+plt.imshow(img_resized)
+y_out=model.predict(flat_data)
+y_out=catagories[y_out[0]]
+print(f'predicted output: {y_out}')
+!pip install streamlit
+
+!pip install pyngrok
+from pyngrok import ngrok
+%%writefile app.py
+import streamlit as st
+import numpy as np
+from skimage.io import imread
+from skimage.transform import resize
+import pickle
+from PIL import Image
+st.title('IMAGE CLASSIFIER USING MACHINE LEARNING')
+st.text('upload the image')
+model=pickle.load(open('img_model.p','rb'))
+uploaded_file=st.file_uploader("choose an image",type="jpg")
+if uploaded_file is not None:
+  img=Image.open(uploaded_file)
+  st.image(img,caption='uploaded Image')
+
+  if st.button('PREDICT'):
+    catagories=['butterfly','cars','preety sunflowers']
+    st.write('Result...')
+    flat_data=[]
+    img=np.array(img)
+    img_resized=resize(img,(150,150,3))
+    flat_data.append(img_resized.flatten())
+    flat_data=np.array(flat_data)
+    y_out=model.predict(flat_data)
+    y_out=catagories[y_out[0]]
+    st.title(f'predicted output: {y_out}')
+ngrok.set_auth_token("2qZKHGb8a7IZbiRetA0BqlCibBw_361SxzaC7JtiXT9vyhr5u") # Replace YOUR_AUTHTOKEN with your actual token
+!nohup streamlit run app.py &
+
+url=ngrok.connect(addr='8501',proto='http')
+url
+
 
